@@ -285,7 +285,6 @@ class ApplyPost(BaseModel):
 async def continue_conservation(
     auth: Auth,
     body: ApplyPost,
-    background_tasks: BackgroundTasks,
 ):
     if not auth.is_authenticated():
         raise HTTPException(status.HTTP_401_UNAUTHORIZED)
@@ -310,7 +309,7 @@ async def continue_conservation(
     # if response contains <END_CONVERSATION> continue the conservation with the <USER_STATS> message
     if "<END_CONVERSATION>" in response.choices[0].message.content:
         print("Ending conservation")
-        background_tasks.add_task(generate_user_stats, uid)
+        #background_tasks.add_task(generate_user_stats, uid)
 
     return {
         "message": response.choices[0].message.content,
